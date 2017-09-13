@@ -10,13 +10,12 @@ const chalk = require("chalk");
 const Tree = require("./widget_tree").Tree;
 const opcua = require("node-opcua");
 
-
 const NodeClass = require("node-opcua/lib/datamodel/nodeclass").NodeClass;
 opcua.NodeClass = NodeClass;
-const attributeIdtoString = _.invert(opcua.AttributeIds);
+
+const attributeIdToString = _.invert(opcua.AttributeIds);
 const DataTypeIdsToString = _.invert(opcua.DataTypeIds);
 //xx const NodeClassToString = _.invert(opcua.NodeClass);
-
 
 const argv = require("yargs")
 .wrap(132)
@@ -167,7 +166,7 @@ function create_subscription() {
 }
 
 
-function doDonnect(callback) {
+function doConnect(callback) {
     console.log("connecting to ....",endpointUrl);
     client.connect(endpointUrl, function () {
         console.log("connected to ....",endpointUrl);
@@ -454,6 +453,7 @@ function expand_opcua_node(node, callback) {
                 }));
             }
         }
+
         callback(err, children);
     });
 }
@@ -578,7 +578,7 @@ function fill_attributesRegion(node) {
                     continue;
                 }
                 const s = toString1(nodeToRead.attributeId, dataValue);
-                append_text(attributeIdtoString[nodeToRead.attributeId], s, attr);
+                append_text(attributeIdToString[nodeToRead.attributeId], s, attr);
             }
             attributeList.setItems(makeItems(attr));
             attributeList.screen.render();
@@ -813,6 +813,6 @@ console.log(chalk.cyan("   endpoint url   = "), endpointUrl.toString());
 console.log(chalk.cyan("   securityMode   = "), securityMode.toString());
 console.log(chalk.cyan("   securityPolicy = "), securityPolicy.toString());
 
-doDonnect(function() {
+doConnect(function() {
 
 });
